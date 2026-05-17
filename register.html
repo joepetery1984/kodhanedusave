@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran | Kodhan Edusave</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100 shadow-sm">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="landingkalkulator.html" class="flex items-center gap-x-3 group">
+                <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-700 overflow-hidden">
+                    <img src="https://kodhan.com/assets/logo.png" alt="Kodhan Logo" class="w-full h-full object-cover">
+                </div>
+                <span class="text-xl font-bold text-gray-900 tracking-tight group-hover:text-green-700 transition">Kodhan <span class="text-green-600">Edusave</span></span>
+            </a>
+            <a href="landingkalkulator.html" class="text-sm font-semibold text-gray-600 hover:text-green-700 transition flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Kembali ke Kalkulator
+            </a>
+        </div>
+    </nav>
+
+    <!-- Formulir Pendaftaran -->
+    <main class="flex-grow flex items-center justify-center py-12 px-6">
+        <div class="max-w-3xl w-full">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-900">Formulir Pendaftaran Edusave</h2>
+                <p class="text-gray-600 mt-2">Amankan masa depan pendidikan anak Anda bersama Koperasi Produsen Damai Horti Agro Nusantara.</p>
+            </div>
+
+            <form class="bg-white border border-gray-200 shadow-xl rounded-3xl p-8" onsubmit="submitForm(event)">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap (Orang Tua)</label>
+                        <input type="text" id="regParentName" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Contoh: Budi Santoso">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nomor WhatsApp Aktif</label>
+                        <input type="tel" id="regPhone" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="081234567890">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nama Anak</label>
+                        <input type="text" id="regChildName" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition" placeholder="Nama anak">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Pilihan Program Pendidikan</label>
+                        <select id="regProgram" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition bg-white">
+                            <option value="">-- Pilih Program --</option>
+                            <option value="Daftar Ulang (1 Tahun)">Daftar Ulang (1 Tahun)</option>
+                            <option value="Daftar SMP (2 Tahun)">Daftar SMP (2 Tahun)</option>
+                            <option value="Daftar SMA (3 Tahun)">Daftar SMA (3 Tahun)</option>
+                            <option value="Kuliah S1 (6 Tahun)">Kuliah S1 (6 Tahun)</option>
+                            <option value="Kuliah S2 (9 Tahun)">Kuliah S2 (9 Tahun)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <label class="flex items-start gap-x-3 cursor-pointer">
+                        <input type="checkbox" required class="mt-1 w-5 h-5 text-green-600 rounded border-gray-300 focus:ring-green-500">
+                        <span class="text-sm text-gray-600 leading-relaxed">
+                            Saya telah membaca dan menyetujui <button type="button" onclick="openTnC()" class="text-green-700 font-semibold hover:underline">Syarat & Ketentuan</button> program Kodhan Edusave yang diselenggarakan oleh Koperasi Produsen Damai Horti Agro Nusantara.
+                        </span>
+                    </label>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl text-lg transition flex items-center justify-center gap-x-2 shadow-lg shadow-green-700/30">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Kirim Pendaftaran via WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
+        <div class="max-w-screen-xl mx-auto px-6 text-center text-gray-500 text-sm">
+            &copy; 2026 Koperasi Produsen Damai Horti Agro Nusantara. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- T&C Modal -->
+    <div id="tncModal" class="fixed inset-0 z-[100] hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[80vh] flex flex-col shadow-2xl">
+            <div class="px-8 py-6 border-b border-gray-100 flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-900">Syarat & Ketentuan Kodhan Edusave</h3>
+                <button type="button" onclick="closeTnC()" class="text-gray-400 hover:text-gray-600 transition">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div class="px-8 py-6 overflow-y-auto text-gray-600 text-sm space-y-4">
+                <p><strong>1. Penyelenggara</strong><br>
+                Program Edusave ini diselenggarakan oleh <strong>Koperasi Produsen Damai Horti Agro Nusantara (KODHAN)</strong>, koperasi tersertifikasi yang berfokus pada solusi agritech modern.</p>
+
+                <p><strong>2. Sistem Investasi</strong><br>
+                Dana pendidikan yang disetorkan akan dialokasikan pada infrastruktur produksi komoditas bernilai tinggi (melon premium) menggunakan sistem terkontrol (<em>Greenhouse</em> dan Sistem Hidroponik) yang meminimalisir risiko kegagalan cuaca dan hama penyakit.</p>
+
+                <p><strong>3. Proyeksi Hasil</strong><br>
+                Angka yang tertera pada Kalkulator Edusave bersifat <strong>proyeksi (estimasi)</strong> yang didasarkan pada hasil riset empiris dan siklus panen riil 4x setahun. Hasil akhir aktual dapat mengalami penyesuaian mengikuti dinamika hasil panen dan harga pasar komoditas premium saat panen.</p>
+
+                <p><strong>4. Periode Penarikan</strong><br>
+                Penarikan dana (pencairan) untuk biaya pendidikan disesuaikan dengan timeline program yang disepakati oleh anggota, mengikuti jadwal penyelesaian siklus panen terdekat pada tahun target biaya dibutuhkan.</p>
+                
+                <p><strong>5. Mitigasi Risiko</strong><br>
+                KODHAN menerapkan SOP ketat untuk menjamin kontinuitas panen. Walaupun sistem agritech telah mengontrol variabel alam secara presisi, faktor keadaan kahar (*force majeure*) tetap dipahami sebagai risiko usaha bersama.</p>
+
+                <p class="text-xs text-gray-500 italic mt-4">Dengan menyetujui, Anda menyatakan telah membaca, memahami, dan menyepakati prinsip kerja operasional program investasi cerdas yang dijalankan oleh KODHAN.</p>
+            </div>
+            <div class="px-8 py-6 border-t border-gray-100 bg-gray-50 rounded-b-3xl text-right">
+                <button type="button" onclick="closeTnC()" class="px-6 py-2.5 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-xl transition shadow">Saya Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTnC() {
+            document.getElementById('tncModal').classList.remove('hidden');
+        }
+
+        function closeTnC() {
+            document.getElementById('tncModal').classList.add('hidden');
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+            
+            const parentName = document.getElementById('regParentName').value;
+            const phone = document.getElementById('regPhone').value;
+            const childName = document.getElementById('regChildName').value;
+            const program = document.getElementById('regProgram').value;
+            
+            const text = `Halo Admin KODHAN,\n\nSaya tertarik mendaftar program *Kodhan Edusave* untuk masa depan pendidikan anak saya.\n\n*Detail Pendaftar:*\n- Nama Orang Tua: ${parentName}\n- No WhatsApp: ${phone}\n- Nama Anak: ${childName}\n- Pilihan Program: ${program}\n\nSaya telah menyetujui Syarat & Ketentuan dari Koperasi Produsen Damai Horti Agro Nusantara. Mohon panduan langkah selanjutnya.\n\nTerima kasih.`;
+            
+            const encodedText = encodeURIComponent(text);
+            window.location.href = `https://wa.me/6285113128011?text=${encodedText}`;
+        }
+    </script>
+</body>
+</html>

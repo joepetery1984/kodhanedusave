@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kodhan Edusave • Tabungan Pendidikan Berinvestasi di Pertanian</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600&display=swap');
+
+        :root {
+            --primary: #166534;
+        }
+
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+
+        .heading-font {
+            font-family: 'Poppins', system_ui, sans-serif;
+            font-weight: 600;
+        }
+
+        .green-gradient {
+            background: linear-gradient(135deg, #166534, #4ade80);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        .calculator-box {
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+
+        @keyframes fadeInScale {
+            0% { transform: scale(0.95); opacity: 0.5; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .result-highlight {
+            animation: fadeInScale 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-x-3">
+                <img src="https://kodhan.com/assets/logo.png" alt="Kodhan Logo" class="h-12 w-auto object-contain">
+                <div>
+                    <span class="font-bold text-2xl text-green-800">Kodhan</span>
+                    <span class="font-semibold text-green-600">Edusave</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-8 text-sm font-medium">
+                <a href="#" class="text-gray-600 hover:text-green-700 transition">Program</a>
+                <a href="#" class="text-gray-600 hover:text-green-700 transition">Cara Kerja</a>
+                <a href="#" class="text-gray-600 hover:text-green-700 transition">Kalkulator</a>
+                <button onclick="scrollToCalculator()"
+                    class="px-5 py-2.5 bg-green-700 hover:bg-green-800 text-white rounded-2xl text-sm font-semibold transition flex items-center gap-x-2">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Coba Kalkulator</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-screen-xl mx-auto px-6 pt-16 pb-12">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div
+                    class="inline-flex items-center gap-x-2 bg-green-100 text-green-800 px-4 py-1.5 rounded-3xl text-sm font-semibold mb-6">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Program Investasi Pendidikan Pertama di Indonesia</span>
+                </div>
+
+                <h1 class="text-5xl md:text-6xl leading-tight font-bold text-gray-900 tracking-tighter">
+                    Tabungan yang<br>
+                    <span class="text-green-700">Tumbuh Bersama</span><br>
+                    Pohon Melon
+                </h1>
+
+                <p class="mt-6 text-xl text-gray-600 max-w-md">
+                    Siapkan dana pendidikan anak sejak kelas 1 SD dengan investasi nyata di pertanian premium Indonesia.
+                </p>
+
+                <div class="mt-8 flex items-center gap-x-4">
+                    <button onclick="scrollToCalculator()"
+                        class="px-8 py-4 bg-green-700 hover:bg-green-800 transition text-white font-semibold rounded-3xl flex items-center gap-x-3 text-lg shadow-lg shadow-green-200">
+                        <span>Mulai Hitung Sekarang</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+
+                    <button onclick="showHowItWorks()"
+                        class="px-6 py-4 border border-gray-300 hover:bg-gray-100 transition font-semibold rounded-3xl flex items-center gap-x-2">
+                        <i class="fa-solid fa-play text-green-700"></i>
+                        <span>Lihat Cara Kerja</span>
+                    </button>
+                </div>
+
+                <div class="mt-8 flex items-center gap-x-6 text-sm">
+                    <div class="flex -space-x-2">
+                        <img src="https://i.pravatar.cc/32?img=28" class="w-8 h-8 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/32?img=32" class="w-8 h-8 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/32?img=47" class="w-8 h-8 rounded-full border-2 border-white">
+                    </div>
+                    <div>
+                        <span class="font-semibold">2.847</span> orang tua sudah bergabung
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative">
+                <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div class="text-sm text-gray-500">Contoh Hasil</div>
+                            <div class="text-4xl font-bold text-green-700 mt-1">Rp 28.4jt</div>
+                            <div class="text-sm text-gray-500">dalam 6 tahun</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block">+187%
+                            </div>
+                            <div class="text-xs text-gray-500 mt-1">dari setoran</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-xs text-gray-500">Dengan setoran Rp 7.500/hari • Mulai kelas 1 SD</div>
+                </div>
+
+                <div
+                    class="absolute -bottom-4 -right-4 bg-white shadow-xl rounded-2xl p-4 border flex items-center gap-x-3">
+                    <div class="text-green-600">
+                        <i class="fa-solid fa-seedling text-3xl"></i>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-sm">142 Pohon</div>
+                        <div class="text-xs text-gray-500">Milik Anak Anda</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Program Section -->
+    <div class="max-w-screen-xl mx-auto px-6 py-12">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-gray-900">Pilih Program Sesuai Tujuan</h2>
+            <p class="text-gray-600 mt-2">Setiap program dirancang khusus untuk kebutuhan pendidikan anak</p>
+        </div>
+
+        <div class="grid md:grid-cols-5 gap-4">
+            <!-- Program Cards -->
+            <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(4500000, 1)">
+                <div class="text-green-600 text-xs font-semibold">PALING POPULER</div>
+                <h3 class="font-bold text-lg mt-1">Daftar Ulang</h3>
+                <div class="text-3xl font-bold text-green-700 mt-3">Rp 4.5jt</div>
+                <div class="text-sm text-gray-500">1 Tahun • 4 Siklus Panen</div>
+                <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 8.500/hari
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(10000000, 2)">
+                <h3 class="font-bold text-lg mt-1">Daftar SMP</h3>
+                <div class="text-3xl font-bold text-green-700 mt-3">Rp 10jt</div>
+                <div class="text-sm text-gray-500">2 Tahun</div>
+                <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 9.500/hari
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(12000000, 3)">
+                <h3 class="font-bold text-lg mt-1">Daftar SMA</h3>
+                <div class="text-3xl font-bold text-green-700 mt-3">Rp 12jt</div>
+                <div class="text-sm text-gray-500">3 Tahun</div>
+                <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 8.500/hari
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(30000000, 6)">
+                <h3 class="font-bold text-lg mt-1">Kuliah S1</h3>
+                <div class="text-3xl font-bold text-green-700 mt-3">Rp 30jt</div>
+                <div class="text-sm text-gray-500">6 Tahun (Paling Optimal)</div>
+                <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 8.000/hari
+                </div>
+            </div>
+
+            <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(50000000, 9)">
+                <h3 class="font-bold text-lg mt-1">Kuliah S2</h3>
+                <div class="text-3xl font-bold text-green-700 mt-3">Rp 50jt</div>
+                <div class="text-sm text-gray-500">9 Tahun</div>
+                <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 7.500/hari
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kalkulator Section -->
+    <div id="calculator" class="max-w-screen-xl mx-auto px-6 py-16 bg-white border-t">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-4xl font-bold text-gray-900">Kalkulator Kodhan Edusave</h2>
+                <p class="text-gray-600 mt-3">Hitung berapa yang harus ditabung agar target tercapai</p>
+            </div>
+
+            <div class="calculator-box bg-white border border-gray-200 shadow-xl rounded-3xl p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+
+                    <!-- Input -->
+                    <div>
+                        <!-- Mode Toggle -->
+                        <div class="mb-6 bg-gray-100 p-1 rounded-xl flex">
+                            <button id="modeTargetBtn" onclick="setMode('target')" class="flex-1 py-2 text-sm font-bold bg-white text-green-700 rounded-lg shadow-sm transition">Target Dana</button>
+                            <button id="modeDailyBtn" onclick="setMode('daily')" class="flex-1 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 transition">Setoran Harian</button>
+                        </div>
+
+                        <!-- Target Dana -->
+                        <div class="mb-8" id="targetModeInput">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-sm font-semibold text-gray-700">Target Dana Pendidikan</label>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute left-4 top-3.5 text-gray-500 font-semibold text-lg">Rp</div>
+                                <input type="text" id="targetAmountDisplay" value="4.500.000"
+                                    class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-2xl text-2xl font-bold text-gray-900 focus:outline-none focus:border-green-600 focus:ring-4 focus:ring-green-50 transition"
+                                    oninput="handleTargetInput(this)">
+                                <input type="hidden" id="targetAmount" value="4500000">
+                            </div>
+                            
+                            <!-- Quick Buttons -->
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <button onclick="setTarget(4500000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">4.5 Juta</button>
+                                <button onclick="setTarget(10000000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">10 Juta</button>
+                                <button onclick="setTarget(30000000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">30 Juta</button>
+                                <button onclick="setTarget(50000000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">50 Juta</button>
+                            </div>
+                        </div>
+
+                        <!-- Setoran Harian (Hidden) -->
+                        <div class="mb-8 hidden" id="dailyModeInput">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-sm font-semibold text-gray-700">Setoran Menabung Per Hari</label>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute left-4 top-3.5 text-gray-500 font-semibold text-lg">Rp</div>
+                                <input type="text" id="dailyInputDisplay" value="5.000"
+                                    class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-2xl text-2xl font-bold text-gray-900 focus:outline-none focus:border-green-600 focus:ring-4 focus:ring-green-50 transition"
+                                    oninput="handleDailyInput(this)">
+                                <input type="hidden" id="dailyInputValue" value="5000">
+                            </div>
+                            
+                            <!-- Quick Buttons -->
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <button onclick="setDailyValue(2000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">2.000</button>
+                                <button onclick="setDailyValue(5000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">5.000</button>
+                                <button onclick="setDailyValue(10000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">10.000</button>
+                                <button onclick="setDailyValue(20000)" class="px-3 py-1.5 bg-gray-100 hover:bg-green-100 text-gray-600 hover:text-green-700 text-xs font-semibold rounded-lg transition">20.000</button>
+                            </div>
+                        </div>
+
+                        <!-- Jangka Waktu -->
+                        <div class="mb-8">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block text-sm font-semibold text-gray-700">Jangka Waktu Menabung</label>
+                                <span id="yearLabel" class="text-green-700 font-bold text-lg">6 Tahun (S1)</span>
+                            </div>
+                            
+                            <input type="range" id="yearsSlider" min="1" max="12" value="6" step="1"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600"
+                                oninput="handleYearSlider(this)">
+                                
+                            <div class="flex justify-between text-xs text-gray-400 mt-2 font-medium">
+                                <span>1 Thn</span>
+                                <span>6 Thn</span>
+                                <span>12 Thn</span>
+                            </div>
+                            <input type="hidden" id="years" value="6">
+                        </div>
+
+                        <button onclick="calculateResult()"
+                            class="w-full py-4 bg-green-700 hover:bg-green-800 text-white font-bold rounded-2xl text-lg transition flex items-center justify-center gap-x-2">
+                            <i class="fa-solid fa-calculator"></i>
+                            <span>Hitung Ulang Proyeksi</span>
+                        </button>
+                    </div>
+
+                    <!-- Result -->
+                    <div id="resultBox" class="bg-green-50 rounded-2xl p-6 border border-green-100">
+                        <div class="text-sm font-semibold text-green-700 mb-4">HASIL PROYEKSI</div>
+
+                        <div class="space-y-5">
+                            <div>
+                                <div id="dailySavingsLabel" class="text-xs text-green-600">Setoran Harian yang Dibutuhkan</div>
+                                <div id="dailySavings" class="text-4xl font-bold text-green-700">Rp 8.500</div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <div class="text-xs text-green-600">Total Pohon Akhir</div>
+                                    <div id="finalTrees" class="text-3xl font-bold text-gray-900">142</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-green-600">Total Profit</div>
+                                    <div id="totalProfit" class="text-3xl font-bold text-gray-900">Rp 18.2jt</div>
+                                </div>
+                            </div>
+
+                            <div class="pt-4 border-t border-green-200 space-y-2">
+                                <div class="flex justify-between text-sm">
+                                    <div class="text-green-600 font-medium">Total Setoran Masuk</div>
+                                    <div id="totalSavingsSum" class="font-bold text-gray-900">Rp 0</div>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <div class="text-green-600 font-bold">Total Nilai Akhir</div>
+                                    <div id="finalValue" class="font-bold text-xl text-green-700">Rp 4.520.000</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Table Container (Initially Hidden) -->
+                <div id="tableContainer" class="mt-8 pt-8 border-t border-gray-200 hidden">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 text-center md:text-left">Detail Proyeksi Bulanan</h3>
+                    <div class="overflow-x-auto overflow-y-auto max-h-[500px] rounded-xl border border-gray-200 shadow-sm relative">
+                        <table class="w-full text-sm text-left whitespace-nowrap">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b sticky top-0 z-10">
+                                <tr>
+                                    <th scope="col" class="px-5 py-4">Bulan ke-</th>
+                                    <th scope="col" class="px-5 py-4">Setoran Masuk</th>
+                                    <th scope="col" class="px-5 py-4">Dana Tunggu</th>
+                                    <th scope="col" class="px-5 py-4">Pohon Dibeli</th>
+                                    <th scope="col" class="px-5 py-4">Profit Panen</th>
+                                    <th scope="col" class="px-5 py-4">Total Nilai</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projectionTableBody" class="divide-y divide-gray-100">
+                                <!-- Rows generated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center text-xs text-gray-500 mt-4">
+                * Perhitungan menggunakan model compounding otomatis tiap 70 hari (1x siklus panen melon) setelah pohon dibeli.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="bg-green-800 text-white py-16">
+        <div class="max-w-screen-xl mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold">Siap Memulai Perjalanan Investasi Anak Anda?</h2>
+            <p class="mt-3 text-green-200 max-w-md mx-auto">Klik tombol di bawah ini untuk mengisi formulir pendaftaran melalui halaman registrasi kami.</p>
+
+            <a href="register.html"
+                class="mt-8 px-10 py-4 inline-flex bg-white text-green-800 font-bold rounded-3xl hover:bg-gray-100 transition items-center gap-x-3 mx-auto">
+                <span>Daftar Sekarang</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            // Already using CDN
+        }
+
+        let currentMode = 'target'; // 'target' atau 'daily'
+
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'target') {
+                document.getElementById('modeTargetBtn').className = "flex-1 py-2 text-sm font-bold bg-white text-green-700 rounded-lg shadow-sm transition";
+                document.getElementById('modeDailyBtn').className = "flex-1 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 transition";
+                document.getElementById('targetModeInput').classList.remove('hidden');
+                document.getElementById('dailyModeInput').classList.add('hidden');
+                document.getElementById('dailySavingsLabel').innerText = "Setoran Harian yang Dibutuhkan";
+            } else {
+                document.getElementById('modeDailyBtn').className = "flex-1 py-2 text-sm font-bold bg-white text-green-700 rounded-lg shadow-sm transition";
+                document.getElementById('modeTargetBtn').className = "flex-1 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 transition";
+                document.getElementById('dailyModeInput').classList.remove('hidden');
+                document.getElementById('targetModeInput').classList.add('hidden');
+                document.getElementById('dailySavingsLabel').innerText = "Setoran Harian Anda";
+            }
+            calculateResult();
+        }
+
+        // Main Calculation Function
+        function calculateResult() {
+            const target = parseFloat(document.getElementById('targetAmount').value) || 4500000;
+            const dailyInput = parseFloat(document.getElementById('dailyInputValue').value) || 5000;
+            const years = parseInt(document.getElementById('years').value);
+
+            // Parameters
+            const treeCost = 110000; // Modal dikembalikan utuh (100rb + 10% sewa)
+            const profitPerTreePerHarvest = 13500;
+            const harvestCycleDays = 70;
+            const daysPerYear = 365;
+            const packageCost = 1100000;
+            const treesPerPackage = 10; // 1.1M / 110rb = 10 pohon
+
+            let dailySavings = 8500; // starting guess
+            let bestDaily = 0;
+            let finalTrees = 0;
+            let finalValue = 0;
+            let totalProfitEarned = 0;
+
+            let totalDays = years * daysPerYear;
+
+            // Jika mode target, cari daily savings yang dibutuhkan pakai binary search
+            if (currentMode === 'target') {
+                let low = 1000;
+                let maxWithoutProfit = target / totalDays;
+                let high = Math.max(50000, maxWithoutProfit * 1.5);
+
+                for (let iter = 0; iter < 25; iter++) {
+                dailySavings = Math.floor((low + high) / 2);
+
+                let trees = 0;
+                let cash = 0;
+                let profitEarned = 0;
+                let simPackages = [];
+
+                for (let day = 1; day <= totalDays; day++) {
+                    cash += dailySavings;
+                    
+                    // Panen: Cek apakah ada paket yang sudah waktunya panen (kontrak 70 hari)
+                    let activePackages = [];
+                    for (let i = 0; i < simPackages.length; i++) {
+                        if (simPackages[i].nextHarvestDay === day) {
+                            let harvestTreesCount = simPackages[i].trees;
+                            let modalReturned = harvestTreesCount * treeCost; // Modal 100rb/pohon kembali
+                            let p = harvestTreesCount * profitPerTreePerHarvest;
+                            
+                            cash += modalReturned + p;
+                            profitEarned += p;
+                            trees -= harvestTreesCount; // Kontrak selesai
+                        } else {
+                            activePackages.push(simPackages[i]);
+                        }
+                    }
+                    simPackages = activePackages;
+
+                    // Compounding: Beli jika kas mencapai 1.100.000
+                    if (cash >= packageCost) {
+                        let newPackagesCount = Math.floor(cash / packageCost);
+                        let newTreesCount = newPackagesCount * treesPerPackage;
+                        trees += newTreesCount;
+                        cash -= newPackagesCount * packageCost;
+                        
+                        simPackages.push({
+                            trees: newTreesCount,
+                            nextHarvestDay: day + harvestCycleDays
+                        });
+                    }
+                }
+
+                finalValue = trees * treeCost + cash;
+
+                if (finalValue >= target) {
+                    high = dailySavings;
+                    bestDaily = dailySavings;
+                    finalTrees = trees;
+                    totalProfitEarned = profitEarned;
+                } else {
+                    low = dailySavings;
+                }
+                }
+            } else {
+                // Jika mode daily, bestDaily langsung dari input
+                bestDaily = dailyInput;
+            }
+
+            // --- Generate Detailed Table Data ---
+            let simCash = 0;
+            let simTrees = 0;
+            let simPackages = [];
+            let tableHTML = '';
+            
+            let currentMonth = 1;
+            let monthSavings = 0;
+            let monthProfit = 0;
+            let monthTreesBought = 0;
+            let monthTreesHarvested = 0;
+            let simTotalProfitEarned = 0;
+            let daysPerMonth = daysPerYear / 12;
+
+            for (let day = 1; day <= totalDays; day++) {
+                simCash += bestDaily;
+                monthSavings += bestDaily;
+                
+                // Panen
+                let activeSimPackages = [];
+                for (let i = 0; i < simPackages.length; i++) {
+                    if (simPackages[i].nextHarvestDay === day) {
+                        let harvestTreesCount = simPackages[i].trees;
+                        let modalReturned = harvestTreesCount * treeCost; // Modal kembali
+                        let p = harvestTreesCount * profitPerTreePerHarvest;
+                        
+                        simCash += modalReturned + p;
+                        monthProfit += p;
+                        simTotalProfitEarned += p;
+                        simTrees -= harvestTreesCount; // Pohon hangus
+                        monthTreesHarvested += harvestTreesCount;
+                    } else {
+                        activeSimPackages.push(simPackages[i]);
+                    }
+                }
+                simPackages = activeSimPackages;
+                
+                // Beli
+                if (simCash >= packageCost) {
+                    let newPackagesCount = Math.floor(simCash / packageCost);
+                    let newTreesCount = newPackagesCount * treesPerPackage;
+                    simTrees += newTreesCount;
+                    monthTreesBought += newTreesCount;
+                    simCash -= newPackagesCount * packageCost;
+                    
+                    simPackages.push({
+                        trees: newTreesCount,
+                        nextHarvestDay: day + harvestCycleDays
+                    });
+                }
+                
+                let monthForDay = Math.floor((day - 1) / daysPerMonth) + 1;
+                
+                // Jika ganti bulan, atau hari terakhir
+                if (monthForDay > currentMonth || day === totalDays) {
+                    let endOfMonthValue = simTrees * treeCost + simCash;
+                    
+                    let treeActivityHTML = '';
+                    if(monthTreesBought > 0) treeActivityHTML += `<div class="text-green-600 text-xs font-bold">+${monthTreesBought} Beli</div>`;
+                    if(monthTreesHarvested > 0) treeActivityHTML += `<div class="text-red-500 text-xs font-bold">-${monthTreesHarvested} Panen</div>`;
+                    if(monthTreesBought === 0 && monthTreesHarvested === 0) treeActivityHTML = '-';
+                    
+                    tableHTML += `
+                        <tr class="bg-white hover:bg-green-50 transition duration-150">
+                            <td class="px-5 py-4 font-semibold text-gray-900">${currentMonth}</td>
+                            <td class="px-5 py-4 text-gray-600">Rp ${Math.round(monthSavings).toLocaleString('id-ID')}</td>
+                            <td class="px-5 py-4 text-orange-600 font-medium">Rp ${Math.round(simCash).toLocaleString('id-ID')}</td>
+                            <td class="px-5 py-4 text-gray-800">
+                                ${treeActivityHTML}
+                                <span class="text-xs text-gray-400 block mt-1">(Sisa: ${simTrees} <i class="fa-solid fa-tree text-green-600"></i>)</span>
+                            </td>
+                            <td class="px-5 py-4 text-green-600 font-semibold">${monthProfit > 0 ? '+Rp ' + Math.round(monthProfit).toLocaleString('id-ID') : '-'}</td>
+                            <td class="px-5 py-4 font-bold text-gray-900">Rp ${Math.round(endOfMonthValue).toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    
+                    currentMonth = monthForDay;
+                    monthSavings = 0;
+                    monthProfit = 0;
+                    monthTreesBought = 0;
+                    monthTreesHarvested = 0;
+                }
+            }
+
+            // --- Sync Summary Data ---
+            finalTrees = simTrees;
+            totalProfitEarned = simTotalProfitEarned;
+            finalValue = simTrees * treeCost + simCash;
+
+            document.getElementById('projectionTableBody').innerHTML = tableHTML;
+            document.getElementById('tableContainer').classList.remove('hidden');
+
+            // --- Update UI with Animations ---
+            const resultBox = document.getElementById('resultBox');
+            resultBox.classList.remove('result-highlight');
+            void resultBox.offsetWidth; // Trigger reflow for animation restart
+            resultBox.classList.add('result-highlight');
+
+            document.getElementById('dailySavings').innerHTML = 'Rp ' + Math.round(bestDaily).toLocaleString('id-ID');
+            document.getElementById('finalTrees').innerHTML = finalTrees.toLocaleString('id-ID');
+            
+            // Format lebih presisi (menggunakan nilai asli, bukan 'jt')
+            let sumSavings = bestDaily * totalDays;
+            document.getElementById('totalSavingsSum').innerHTML = 'Rp ' + Math.round(sumSavings).toLocaleString('id-ID');
+            document.getElementById('totalProfit').innerHTML = 'Rp ' + Math.round(totalProfitEarned).toLocaleString('id-ID');
+            document.getElementById('finalValue').innerHTML = 'Rp ' + Math.round(finalValue).toLocaleString('id-ID');
+        }
+
+        function selectProgram(target, years) {
+            if (currentMode !== 'target') {
+                setMode('target');
+            }
+            setTarget(target);
+            document.getElementById('yearsSlider').value = years;
+            handleYearSlider(document.getElementById('yearsSlider'));
+
+            // Scroll to calculator
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToCalculator() {
+            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showHowItWorks() {
+            alert("Fitur 'Cara Kerja' akan ditambahkan di versi berikutnya. Terima kasih!");
+        }
+
+        function contactUs() {
+            window.location.href = "https://wa.me/6285113128011?text=Halo%20Kodhan%2C%20saya%20ingin%20tanya%20tentang%20program%20Edusave";
+        }
+
+
+
+        function handleTargetInput(input) {
+            // Remove non-numeric chars
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (!value) value = '0';
+            
+            // Parse to int
+            let num = parseInt(value, 10);
+            
+            // Update hidden input
+            document.getElementById('targetAmount').value = num;
+            
+            // Format and update display
+            input.value = num.toLocaleString('id-ID');
+            
+            calculateResult();
+        }
+
+        function setTarget(amount) {
+            document.getElementById('targetAmount').value = amount;
+            document.getElementById('targetAmountDisplay').value = amount.toLocaleString('id-ID');
+            calculateResult();
+        }
+
+        function handleDailyInput(input) {
+            let value = input.value.replace(/[^0-9]/g, '');
+            if (!value) value = '0';
+            
+            let num = parseInt(value, 10);
+            document.getElementById('dailyInputValue').value = num;
+            input.value = num.toLocaleString('id-ID');
+            
+            calculateResult();
+        }
+
+        function setDailyValue(amount) {
+            document.getElementById('dailyInputValue').value = amount;
+            document.getElementById('dailyInputDisplay').value = amount.toLocaleString('id-ID');
+            calculateResult();
+        }
+
+        function handleYearSlider(slider) {
+            let val = slider.value;
+            document.getElementById('years').value = val;
+            
+            let label = val + ' Tahun';
+            if(val == 1) label += ' (Daftar Ulang)';
+            else if(val == 2) label += ' (SMP)';
+            else if(val == 3) label += ' (SMA)';
+            else if(val == 6) label += ' (S1)';
+            else if(val == 9) label += ' (S2)';
+            
+            document.getElementById('yearLabel').innerText = label;
+            calculateResult();
+        }
+
+        // Initialize
+        window.onload = function () {
+            initializeTailwind();
+
+            // Run initial calculation
+            setTimeout(() => {
+                calculateResult();
+            }, 300);
+
+            // Add enter key support
+            document.getElementById('targetAmountDisplay').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') calculateResult();
+            });
+            document.getElementById('dailyInputDisplay').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') calculateResult();
+            });
+        }
+
+        // Keyboard shortcut
+        document.addEventListener('keydown', function (e) {
+            if (e.metaKey && e.key === "/") {
+                e.preventDefault();
+                document.getElementById('targetAmountDisplay').focus();
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Edusave | Kodhan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7f6; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Poppins', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+    </style>
+</head>
+
+<body class="flex h-screen overflow-hidden text-gray-800">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex-shrink-0 flex flex-col hidden md:flex z-20">
+        <div class="h-20 flex items-center px-6 border-b border-gray-100">
+            <div class="flex items-center gap-x-3">
+                <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center overflow-hidden">
+                    <img src="https://kodhan.com/assets/logo.png" alt="Kodhan" class="w-full h-full object-cover">
+                </div>
+                <span class="text-xl font-bold text-gray-900 tracking-tight">Kodhan</span>
+            </div>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-6 px-4 space-y-2">
+            <a href="#" class="flex items-center gap-x-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition">
+                <i class="fa-solid fa-border-all w-5 text-center"></i> Ringkasan Utama
+            </a>
+            <a href="#" class="flex items-center gap-x-3 px-4 py-3 text-sm font-semibold text-green-700 bg-green-50 rounded-xl transition shadow-sm">
+                <i class="fa-solid fa-graduation-cap w-5 text-center"></i> Program Edusave
+            </a>
+            <a href="#" class="flex items-center gap-x-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition">
+                <i class="fa-solid fa-leaf w-5 text-center"></i> Portofolio Kebun
+            </a>
+            <a href="#" class="flex items-center gap-x-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition">
+                <i class="fa-solid fa-clock-rotate-left w-5 text-center"></i> Riwayat Transaksi
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-gray-100">
+            <a href="#" class="flex items-center gap-x-3 px-4 py-3 text-sm font-medium text-gray-600 rounded-xl hover:bg-gray-50 transition">
+                <i class="fa-solid fa-gear w-5 text-center"></i> Pengaturan
+            </a>
+            <a href="landingkalkulator.html" class="flex items-center gap-x-3 px-4 py-3 text-sm font-medium text-red-600 rounded-xl hover:bg-red-50 transition mt-1">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5 text-center"></i> Keluar
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        <!-- Header -->
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 lg:px-10 z-10 sticky top-0">
+            <div class="flex items-center gap-x-4">
+                <button class="md:hidden text-gray-500 hover:text-gray-700">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900">Dashboard Edusave</h1>
+                    <p class="text-xs text-gray-500 hidden sm:block">Pemantauan investasi pendidikan anak Anda</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-4">
+                <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-gray-200 transition relative">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+                </button>
+                <div class="flex items-center gap-x-3 pl-4 border-l border-gray-200 cursor-pointer">
+                    <img src="https://ui-avatars.com/api/?name=Budi+Santoso&background=15803d&color=fff" alt="User" class="w-10 h-10 rounded-full">
+                    <div class="hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-900 leading-tight">Budi Santoso</p>
+                        <p class="text-xs text-gray-500">Member Premium</p>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-xs text-gray-400 hidden sm:block ml-1"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Content -->
+        <div class="flex-1 overflow-y-auto p-6 lg:p-10 pb-20">
+            
+            <!-- Welcome Alert -->
+            <div class="bg-gradient-to-r from-green-800 to-green-600 rounded-3xl p-6 md:p-8 text-white mb-8 shadow-xl shadow-green-700/20 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+                
+                <div class="relative z-10 w-full md:w-auto">
+                    <span class="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-semibold backdrop-blur-sm mb-3">Siklus #4 Tahun Ini</span>
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Panen Berikutnya: 24 Hari Lagi</h2>
+                    <p class="text-green-100 max-w-lg text-sm md:text-base leading-relaxed">Pohon melon Anda sedang dalam masa pembuahan optimal. Estimasi bagi hasil akan diakumulasikan ke saldo Anda pada pertengahan bulan depan.</p>
+                </div>
+                
+                <div class="relative z-10 w-full md:w-auto flex flex-col gap-3">
+                    <button class="w-full md:w-auto px-6 py-3.5 bg-white text-green-800 font-bold rounded-xl shadow-lg hover:bg-gray-50 transition flex items-center justify-center gap-x-2">
+                        <span>Tambah Setoran</span>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-md border border-green-100">+Rp 250k hari ini</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 mb-1">Total Saldo Terkumpul</p>
+                    <h3 class="text-2xl font-bold text-gray-900 tracking-tight">Rp 12.450.000</h3>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-tree"></i>
+                        </div>
+                        <span class="text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-md border border-green-100">+3 Pohon</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 mb-1">Akumulasi Pohon Aktif</p>
+                    <div class="flex items-baseline gap-x-2">
+                        <h3 class="text-2xl font-bold text-gray-900 tracking-tight">124</h3>
+                        <span class="text-sm text-gray-500 font-medium">Pohon</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <span class="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-md border border-gray-200">Total</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 mb-1">Total Profit Diterima</p>
+                    <h3 class="text-2xl font-bold text-gray-900 tracking-tight">Rp 3.840.000</h3>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="glass-card rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition group">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded-md border border-purple-100">Tercapai 25%</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-500 mb-1">Target: Kuliah S1</p>
+                    <div class="w-full bg-gray-100 rounded-full h-2.5 mt-3 mb-1.5 overflow-hidden">
+                        <div class="bg-purple-600 h-2.5 rounded-full" style="width: 25%"></div>
+                    </div>
+                    <p class="text-xs text-gray-400 font-medium flex justify-between">
+                        <span>Rp 12.45 Jt</span>
+                        <span>Dibutuhkan: Rp 50 Jt</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
+                <!-- Chart Area -->
+                <div class="xl:col-span-2 glass-card border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900">Pertumbuhan Nilai Investasi</h3>
+                            <p class="text-sm text-gray-500 mt-1">Perbandingan Proyeksi Kalkulator vs Realisasi Aktual</p>
+                        </div>
+                        <select class="bg-gray-50 border border-gray-200 text-gray-700 text-sm font-medium rounded-xl focus:ring-green-500 focus:border-green-500 block px-4 py-2.5 outline-none cursor-pointer">
+                            <option>Tahun Ini</option>
+                            <option>Tahun Lalu</option>
+                            <option>Semua Waktu</option>
+                        </select>
+                    </div>
+                    <div class="relative h-72 w-full mt-4">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="glass-card border border-gray-200 rounded-3xl p-6 md:p-8 shadow-sm flex flex-col h-[400px] xl:h-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-gray-900">Riwayat Terakhir</h3>
+                        <a href="#" class="text-sm font-semibold text-green-600 hover:text-green-700 transition">Lihat Semua</a>
+                    </div>
+                    
+                    <div class="flex-1 overflow-y-auto pr-2 space-y-6 scrollbar-hide">
+                        <!-- Activity Item -->
+                        <div class="flex gap-x-4 items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-arrow-down"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Setoran Diterima</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Transfer Bank BCA</p>
+                                <p class="text-[11px] font-medium text-gray-400 mt-1">Hari ini, 09:41</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-green-600">+Rp 250.000</p>
+                            </div>
+                        </div>
+
+                        <!-- Activity Item -->
+                        <div class="flex gap-x-4 items-center">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-seedling"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Auto-Beli Pohon Baru</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Konversi dari akumulasi saldo</p>
+                                <p class="text-[11px] font-medium text-gray-400 mt-1">Kemarin, 14:20</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-gray-900">-Rp 200.000</p>
+                                <p class="text-xs font-semibold text-blue-600">+2 Pohon</p>
+                            </div>
+                        </div>
+
+                        <!-- Activity Item -->
+                        <div class="flex gap-x-4 items-center">
+                            <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Bagi Hasil Panen #3</p>
+                                <p class="text-xs text-gray-500 mt-0.5">Dari total 120 Pohon aktif</p>
+                                <p class="text-[11px] font-medium text-gray-400 mt-1">12 Okt 2026</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-green-600">+Rp 1.620.000</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Activity Item -->
+                        <div class="flex gap-x-4 items-center">
+                            <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-arrow-down"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-sm font-bold text-gray-900">Setoran Diterima</p>
+                                <p class="text-xs text-gray-500 mt-0.5">VA Mandiri</p>
+                                <p class="text-[11px] font-medium text-gray-400 mt-1">05 Okt 2026</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm font-bold text-green-600">+Rp 1.000.000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <style>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .scrollbar-hide {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+
+    <script>
+        // Chart.js Configuration
+        const ctx = document.getElementById('growthChart').getContext('2d');
+        
+        // Gradient for line chart
+        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+        gradient.addColorStop(0, 'rgba(21, 128, 61, 0.25)'); // green-700 with opacity
+        gradient.addColorStop(1, 'rgba(21, 128, 61, 0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agt', 'Sep', 'Okt', 'Nov', 'Des'],
+                datasets: [{
+                    label: 'Realisasi Saldo',
+                    data: [1.2, 2.5, 4.1, 5.8, 7.0, 8.5, 9.8, 11.2, 12.0, 12.45, null, null],
+                    borderColor: '#15803d', // green-700
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#15803d',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Proyeksi Kalkulator',
+                    data: [1.0, 2.0, 3.5, 4.8, 6.0, 7.5, 8.8, 10.0, 11.5, 12.0, 13.5, 15.0],
+                    borderColor: '#9ca3af', // gray-400
+                    borderWidth: 2,
+                    borderDash: [6, 4],
+                    pointRadius: 0,
+                    pointHoverRadius: 0,
+                    fill: false,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            usePointStyle: true,
+                            boxWidth: 8,
+                            padding: 20,
+                            font: { family: "'Inter', sans-serif", size: 12, weight: '500' },
+                            color: '#4b5563'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(17, 24, 39, 0.95)', // gray-900
+                        titleFont: { family: "'Inter', sans-serif", size: 13, weight: '600' },
+                        bodyFont: { family: "'Inter', sans-serif", size: 13 },
+                        padding: 12,
+                        cornerRadius: 10,
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.dataset.label + ': Rp ' + context.parsed.y + ' Jt';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { 
+                            color: '#f3f4f6', 
+                            drawBorder: false,
+                            tickLength: 0
+                        },
+                        ticks: {
+                            font: { family: "'Inter', sans-serif", size: 11 },
+                            color: '#9ca3af',
+                            padding: 10,
+                            callback: function(value) { return value + ' Jt'; }
+                        }
+                    },
+                    x: {
+                        grid: { 
+                            display: false, 
+                            drawBorder: false 
+                        },
+                        ticks: { 
+                            font: { family: "'Inter', sans-serif", size: 11 }, 
+                            color: '#9ca3af',
+                            padding: 10
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+            }
+        });
+    </script>
+</body>
+</html>
