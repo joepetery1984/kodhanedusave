@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kodhan Edusave • Tabungan Pendidikan Berinvestasi di Pertanian</title>
+    <title>Kodhan Edusave â€¢ Tabungan Pendidikan Berinvestasi di Pertanian</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -138,7 +138,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-6 text-xs text-gray-500">Dengan setoran Rp 7.500/hari • Mulai kelas 1 SD</div>
+                    <div class="mt-6 text-xs text-gray-500">Dengan setoran Rp 7.500/hari â€¢ Mulai kelas 1 SD</div>
                 </div>
 
                 <div
@@ -168,7 +168,7 @@
                 <div class="text-green-600 text-xs font-semibold">PALING POPULER</div>
                 <h3 class="font-bold text-lg mt-1">Daftar Ulang</h3>
                 <div class="text-3xl font-bold text-green-700 mt-3">Rp 4.5jt</div>
-                <div class="text-sm text-gray-500">1 Tahun • 4 Siklus Panen</div>
+                <div class="text-sm text-gray-500">1 Tahun â€¢ 4 Siklus Panen</div>
                 <div class="mt-4 text-xs bg-green-50 text-green-700 px-3 py-1 rounded-full inline-block">Rp 8.500/hari
                 </div>
             </div>
@@ -376,10 +376,7 @@
     </div>
 
     <script>
-        // Tailwind script
-        function initializeTailwind() {
-            // Already using CDN
-        }
+        function initializeTailwind() { /* CDN already loaded */ }
 
         let currentMode = 'target'; // 'target' atau 'daily'
 
@@ -401,307 +398,173 @@
             calculateResult();
         }
 
-        // Main Calculation Function
+        // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        // MODEL BISNIS YANG BENAR:
+        //   Paket: { trees, nextProfitDay, maturityDay }
+        //   â€¢ Beli paket Rp1.100.000 = 10 pohon, kontrak 365 hari
+        //   â€¢ Setiap 70 hari  â†’ profit diterima, pohon TETAP aktif
+        //   â€¢ Hari ke-365     â†’ modal dikembalikan, pohon dihapus
+        //   â€¢ Profit 70-harian bisa dipakai beli paket baru
+        // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+        function runSimulation(dailySavings, totalDays, p) {
+            let cash = 0, trees = 0, profitEarned = 0, pkgs = [];
+            for (let day = 1; day <= totalDays; day++) {
+                cash += dailySavings;
+                let active = [];
+                for (let pkg of pkgs) {
+                    if (pkg.maturityDay === day) {
+                        cash  += pkg.trees * p.treeCost; // modal kembali
+                        trees -= pkg.trees;              // pohon keluar
+                    } else {
+                        if (pkg.nextProfitDay === day) {
+                            let pr = pkg.trees * p.profitPerTree;
+                            cash += pr; profitEarned += pr;
+                            active.push({ trees: pkg.trees, nextProfitDay: pkg.nextProfitDay + p.harvestCycle, maturityDay: pkg.maturityDay });
+                        } else { active.push(pkg); }
+                    }
+                }
+                pkgs = active;
+                if (cash >= p.packageCost) {
+                    let n = Math.floor(cash / p.packageCost), nt = n * p.treesPerPkg;
+                    trees += nt; cash -= n * p.packageCost;
+                    pkgs.push({ trees: nt, nextProfitDay: day + p.harvestCycle, maturityDay: day + p.daysPerYear });
+                }
+            }
+            return { trees, cash, profitEarned };
+        }
+
         function calculateResult() {
-            const target = parseFloat(document.getElementById('targetAmount').value) || 4500000;
-            const dailyInput = parseFloat(document.getElementById('dailyInputValue').value) || 5000;
-            const years = parseInt(document.getElementById('years').value);
+            const target   = parseFloat(document.getElementById('targetAmount').value) || 4500000;
+            const dailyInp = parseFloat(document.getElementById('dailyInputValue').value) || 5000;
+            const years    = parseInt(document.getElementById('years').value);
 
-            // Parameters
-            const treeCost = 110000; // Modal dikembalikan utuh (100rb + 10% sewa)
-            const profitPerTreePerHarvest = 13500;
-            const harvestCycleDays = 70;
-            const daysPerYear = 365;
-            const packageCost = 1100000;
-            const treesPerPackage = 10; // 1.1M / 110rb = 10 pohon
+            const P = { treeCost: 110000, profitPerTree: 13500, harvestCycle: 70, daysPerYear: 365, packageCost: 1100000, treesPerPkg: 10 };
+            const totalDays = years * P.daysPerYear;
 
-            let dailySavings = 8500; // starting guess
-            let bestDaily = 0;
-            let finalTrees = 0;
-            let finalValue = 0;
-            let totalProfitEarned = 0;
-
-            let totalDays = years * daysPerYear;
-
-            // Jika mode target, cari daily savings yang dibutuhkan pakai binary search
+            // Binary search untuk mode Target Dana
+            let bestDaily = dailyInp;
             if (currentMode === 'target') {
-                let low = 1000;
-                let maxWithoutProfit = target / totalDays;
-                let high = Math.max(50000, maxWithoutProfit * 1.5);
-
-                for (let iter = 0; iter < 25; iter++) {
-                dailySavings = Math.floor((low + high) / 2);
-
-                let trees = 0;
-                let cash = 0;
-                let profitEarned = 0;
-                let simPackages = [];
-
-                for (let day = 1; day <= totalDays; day++) {
-                    cash += dailySavings;
-                    
-                    // Panen: Cek apakah ada paket yang sudah waktunya panen (kontrak 70 hari)
-                    let activePackages = [];
-                    for (let i = 0; i < simPackages.length; i++) {
-                        if (simPackages[i].nextHarvestDay === day) {
-                            let harvestTreesCount = simPackages[i].trees;
-                            let modalReturned = harvestTreesCount * treeCost; // Modal 100rb/pohon kembali
-                            let p = harvestTreesCount * profitPerTreePerHarvest;
-                            
-                            cash += modalReturned + p;
-                            profitEarned += p;
-                            trees -= harvestTreesCount; // Kontrak selesai
-                        } else {
-                            activePackages.push(simPackages[i]);
-                        }
-                    }
-                    simPackages = activePackages;
-
-                    // Compounding: Beli jika kas mencapai 1.100.000
-                    if (cash >= packageCost) {
-                        let newPackagesCount = Math.floor(cash / packageCost);
-                        let newTreesCount = newPackagesCount * treesPerPackage;
-                        trees += newTreesCount;
-                        cash -= newPackagesCount * packageCost;
-                        
-                        simPackages.push({
-                            trees: newTreesCount,
-                            nextHarvestDay: day + harvestCycleDays
-                        });
-                    }
+                let low = 100, high = Math.max(50000, (target / totalDays) * 2);
+                for (let i = 0; i < 30; i++) {
+                    let mid = Math.floor((low + high) / 2);
+                    let fv  = runSimulation(mid, totalDays, P);
+                    if (fv.trees * P.treeCost + fv.cash >= target) { bestDaily = mid; high = mid; }
+                    else { low = mid; }
                 }
-
-                finalValue = trees * treeCost + cash;
-
-                if (finalValue >= target) {
-                    high = dailySavings;
-                    bestDaily = dailySavings;
-                    finalTrees = trees;
-                    totalProfitEarned = profitEarned;
-                } else {
-                    low = dailySavings;
-                }
-                }
-            } else {
-                // Jika mode daily, bestDaily langsung dari input
-                bestDaily = dailyInput;
             }
 
-            // --- Generate Detailed Table Data ---
-            let simCash = 0;
-            let simTrees = 0;
-            let simPackages = [];
-            let tableHTML = '';
-            
-            let currentMonth = 1;
-            let monthSavings = 0;
-            let monthProfit = 0;
-            let monthTreesBought = 0;
-            let monthTreesHarvested = 0;
-            let simTotalProfitEarned = 0;
-            let daysPerMonth = daysPerYear / 12;
+            // Simulasi lengkap untuk tabel detail
+            const dpm = P.daysPerYear / 12;
+            let simCash = 0, simTrees = 0, simPkgs = [];
+            let tableHTML = '', currentMonth = 1;
+            let mSav = 0, mProfit = 0, mBought = 0, mMatured = 0, totalProfit = 0;
 
             for (let day = 1; day <= totalDays; day++) {
-                simCash += bestDaily;
-                monthSavings += bestDaily;
-                
-                // Panen
-                let activeSimPackages = [];
-                for (let i = 0; i < simPackages.length; i++) {
-                    if (simPackages[i].nextHarvestDay === day) {
-                        let harvestTreesCount = simPackages[i].trees;
-                        let modalReturned = harvestTreesCount * treeCost; // Modal kembali
-                        let p = harvestTreesCount * profitPerTreePerHarvest;
-                        
-                        simCash += modalReturned + p;
-                        monthProfit += p;
-                        simTotalProfitEarned += p;
-                        simTrees -= harvestTreesCount; // Pohon hangus
-                        monthTreesHarvested += harvestTreesCount;
+                simCash += bestDaily; mSav += bestDaily;
+                let active = [];
+                for (let pkg of simPkgs) {
+                    if (pkg.maturityDay === day) {
+                        simCash += pkg.trees * P.treeCost; simTrees -= pkg.trees; mMatured += pkg.trees;
                     } else {
-                        activeSimPackages.push(simPackages[i]);
+                        if (pkg.nextProfitDay === day) {
+                            let pr = pkg.trees * P.profitPerTree;
+                            simCash += pr; mProfit += pr; totalProfit += pr;
+                            active.push({ trees: pkg.trees, nextProfitDay: pkg.nextProfitDay + P.harvestCycle, maturityDay: pkg.maturityDay });
+                        } else { active.push(pkg); }
                     }
                 }
-                simPackages = activeSimPackages;
-                
-                // Beli
-                if (simCash >= packageCost) {
-                    let newPackagesCount = Math.floor(simCash / packageCost);
-                    let newTreesCount = newPackagesCount * treesPerPackage;
-                    simTrees += newTreesCount;
-                    monthTreesBought += newTreesCount;
-                    simCash -= newPackagesCount * packageCost;
-                    
-                    simPackages.push({
-                        trees: newTreesCount,
-                        nextHarvestDay: day + harvestCycleDays
-                    });
+                simPkgs = active;
+                if (simCash >= P.packageCost) {
+                    let n = Math.floor(simCash / P.packageCost), nt = n * P.treesPerPkg;
+                    simTrees += nt; mBought += nt; simCash -= n * P.packageCost;
+                    simPkgs.push({ trees: nt, nextProfitDay: day + P.harvestCycle, maturityDay: day + P.daysPerYear });
                 }
-                
-                let monthForDay = Math.floor((day - 1) / daysPerMonth) + 1;
-                
-                // Jika ganti bulan, atau hari terakhir
-                if (monthForDay > currentMonth || day === totalDays) {
-                    let endOfMonthValue = simTrees * treeCost + simCash;
-                    
-                    let treeActivityHTML = '';
-                    if(monthTreesBought > 0) treeActivityHTML += `<div class="text-green-600 text-xs font-bold">+${monthTreesBought} Beli</div>`;
-                    if(monthTreesHarvested > 0) treeActivityHTML += `<div class="text-red-500 text-xs font-bold">-${monthTreesHarvested} Panen</div>`;
-                    if(monthTreesBought === 0 && monthTreesHarvested === 0) treeActivityHTML = '-';
-                    
-                    tableHTML += `
-                        <tr class="bg-white hover:bg-green-50 transition duration-150">
-                            <td class="px-5 py-4 font-semibold text-gray-900">${currentMonth}</td>
-                            <td class="px-5 py-4 text-gray-600">Rp ${Math.round(monthSavings).toLocaleString('id-ID')}</td>
-                            <td class="px-5 py-4 text-orange-600 font-medium">Rp ${Math.round(simCash).toLocaleString('id-ID')}</td>
-                            <td class="px-5 py-4 text-gray-800">
-                                ${treeActivityHTML}
-                                <span class="text-xs text-gray-400 block mt-1">(Sisa: ${simTrees} <i class="fa-solid fa-tree text-green-600"></i>)</span>
-                            </td>
-                            <td class="px-5 py-4 text-green-600 font-semibold">${monthProfit > 0 ? '+Rp ' + Math.round(monthProfit).toLocaleString('id-ID') : '-'}</td>
-                            <td class="px-5 py-4 font-bold text-gray-900">Rp ${Math.round(endOfMonthValue).toLocaleString('id-ID')}</td>
-                        </tr>
-                    `;
-                    
-                    currentMonth = monthForDay;
-                    monthSavings = 0;
-                    monthProfit = 0;
-                    monthTreesBought = 0;
-                    monthTreesHarvested = 0;
+
+                let mfd = Math.floor((day - 1) / dpm) + 1;
+                if (mfd > currentMonth || day === totalDays) {
+                    let ev = simTrees * P.treeCost + simCash;
+                    let tH = '';
+                    if (mBought  > 0) tH += `<div class="text-green-600 text-xs font-bold">+${mBought} Beli</div>`;
+                    if (mMatured > 0) tH += `<div class="text-blue-500 text-xs font-bold">-${mMatured} Jatuh Tempo</div>`;
+                    if (!mBought && !mMatured) tH = '-';
+                    tableHTML += `<tr class="bg-white hover:bg-green-50 transition duration-150">
+                        <td class="px-5 py-4 font-semibold text-gray-900">${currentMonth}</td>
+                        <td class="px-5 py-4 text-gray-600">Rp ${Math.round(mSav).toLocaleString('id-ID')}</td>
+                        <td class="px-5 py-4 text-orange-600 font-medium">Rp ${Math.round(simCash).toLocaleString('id-ID')}</td>
+                        <td class="px-5 py-4 text-gray-800">${tH}<span class="text-xs text-gray-400 block mt-1">(Aktif: ${simTrees} <i class="fa-solid fa-tree text-green-600"></i>)</span></td>
+                        <td class="px-5 py-4 text-green-600 font-semibold">${mProfit > 0 ? '+Rp ' + Math.round(mProfit).toLocaleString('id-ID') : '-'}</td>
+                        <td class="px-5 py-4 font-bold text-gray-900">Rp ${Math.round(ev).toLocaleString('id-ID')}</td>
+                    </tr>`;
+                    currentMonth++; // selalu +1, tidak lompat
+                    mSav = 0; mProfit = 0; mBought = 0; mMatured = 0;
                 }
             }
 
-            // --- Sync Summary Data ---
-            finalTrees = simTrees;
-            totalProfitEarned = simTotalProfitEarned;
-            finalValue = simTrees * treeCost + simCash;
-
+            const finalValue = simTrees * P.treeCost + simCash;
             document.getElementById('projectionTableBody').innerHTML = tableHTML;
             document.getElementById('tableContainer').classList.remove('hidden');
-
-            // --- Update UI with Animations ---
-            const resultBox = document.getElementById('resultBox');
-            resultBox.classList.remove('result-highlight');
-            void resultBox.offsetWidth; // Trigger reflow for animation restart
-            resultBox.classList.add('result-highlight');
-
-            document.getElementById('dailySavings').innerHTML = 'Rp ' + Math.round(bestDaily).toLocaleString('id-ID');
-            document.getElementById('finalTrees').innerHTML = finalTrees.toLocaleString('id-ID');
-            
-            // Format lebih presisi (menggunakan nilai asli, bukan 'jt')
-            let sumSavings = bestDaily * totalDays;
-            document.getElementById('totalSavingsSum').innerHTML = 'Rp ' + Math.round(sumSavings).toLocaleString('id-ID');
-            document.getElementById('totalProfit').innerHTML = 'Rp ' + Math.round(totalProfitEarned).toLocaleString('id-ID');
-            document.getElementById('finalValue').innerHTML = 'Rp ' + Math.round(finalValue).toLocaleString('id-ID');
+            const rb = document.getElementById('resultBox');
+            rb.classList.remove('result-highlight'); void rb.offsetWidth; rb.classList.add('result-highlight');
+            document.getElementById('dailySavings').innerHTML    = 'Rp ' + Math.round(bestDaily).toLocaleString('id-ID');
+            document.getElementById('finalTrees').innerHTML      = simTrees.toLocaleString('id-ID');
+            document.getElementById('totalProfit').innerHTML     = 'Rp ' + Math.round(totalProfit).toLocaleString('id-ID');
+            document.getElementById('totalSavingsSum').innerHTML = 'Rp ' + Math.round(bestDaily * totalDays).toLocaleString('id-ID');
+            document.getElementById('finalValue').innerHTML      = 'Rp ' + Math.round(finalValue).toLocaleString('id-ID');
         }
 
         function selectProgram(target, years) {
-            if (currentMode !== 'target') {
-                setMode('target');
-            }
+            if (currentMode !== 'target') setMode('target');
             setTarget(target);
             document.getElementById('yearsSlider').value = years;
             handleYearSlider(document.getElementById('yearsSlider'));
-
-            // Scroll to calculator
             document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
         }
-
-        function scrollToCalculator() {
-            document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function showHowItWorks() {
-            alert("Fitur 'Cara Kerja' akan ditambahkan di versi berikutnya. Terima kasih!");
-        }
-
-        function contactUs() {
-            window.location.href = "https://wa.me/6285113128011?text=Halo%20Kodhan%2C%20saya%20ingin%20tanya%20tentang%20program%20Edusave";
-        }
-
-
-
+        function scrollToCalculator() { document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' }); }
+        function showHowItWorks() { alert("Fitur 'Cara Kerja' akan ditambahkan di versi berikutnya."); }
         function handleTargetInput(input) {
-            // Remove non-numeric chars
-            let value = input.value.replace(/[^0-9]/g, '');
-            if (!value) value = '0';
-            
-            // Parse to int
-            let num = parseInt(value, 10);
-            
-            // Update hidden input
+            let num = parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
             document.getElementById('targetAmount').value = num;
-            
-            // Format and update display
             input.value = num.toLocaleString('id-ID');
-            
             calculateResult();
         }
-
         function setTarget(amount) {
             document.getElementById('targetAmount').value = amount;
             document.getElementById('targetAmountDisplay').value = amount.toLocaleString('id-ID');
             calculateResult();
         }
-
         function handleDailyInput(input) {
-            let value = input.value.replace(/[^0-9]/g, '');
-            if (!value) value = '0';
-            
-            let num = parseInt(value, 10);
+            let num = parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
             document.getElementById('dailyInputValue').value = num;
             input.value = num.toLocaleString('id-ID');
-            
             calculateResult();
         }
-
         function setDailyValue(amount) {
             document.getElementById('dailyInputValue').value = amount;
             document.getElementById('dailyInputDisplay').value = amount.toLocaleString('id-ID');
             calculateResult();
         }
-
         function handleYearSlider(slider) {
             let val = slider.value;
             document.getElementById('years').value = val;
-            
             let label = val + ' Tahun';
-            if(val == 1) label += ' (Daftar Ulang)';
-            else if(val == 2) label += ' (SMP)';
-            else if(val == 3) label += ' (SMA)';
-            else if(val == 6) label += ' (S1)';
-            else if(val == 9) label += ' (S2)';
-            
+            if (val == 1) label += ' (Daftar Ulang)';
+            else if (val == 2) label += ' (SMP)';
+            else if (val == 3) label += ' (SMA)';
+            else if (val == 6) label += ' (S1)';
+            else if (val == 9) label += ' (S2)';
             document.getElementById('yearLabel').innerText = label;
             calculateResult();
         }
-
-        // Initialize
         window.onload = function () {
-            initializeTailwind();
-
-            // Run initial calculation
-            setTimeout(() => {
-                calculateResult();
-            }, 300);
-
-            // Add enter key support
-            document.getElementById('targetAmountDisplay').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') calculateResult();
-            });
-            document.getElementById('dailyInputDisplay').addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') calculateResult();
-            });
-        }
-
-        // Keyboard shortcut
+            setTimeout(() => calculateResult(), 300);
+            document.getElementById('targetAmountDisplay').addEventListener('keypress', e => { if (e.key === 'Enter') calculateResult(); });
+            document.getElementById('dailyInputDisplay').addEventListener('keypress',  e => { if (e.key === 'Enter') calculateResult(); });
+        };
         document.addEventListener('keydown', function (e) {
-            if (e.metaKey && e.key === "/") {
-                e.preventDefault();
-                document.getElementById('targetAmountDisplay').focus();
-            }
+            if (e.metaKey && e.key === '/') { e.preventDefault(); document.getElementById('targetAmountDisplay').focus(); }
         });
     </script>
 </body>
 
 </html>
+
