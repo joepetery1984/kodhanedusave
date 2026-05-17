@@ -55,16 +55,18 @@
 <body class="bg-gray-50">
     <!-- Navbar -->
     <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-x-3">
-                <img src="https://kodhan.com/assets/logo.png" alt="Kodhan Logo" class="h-12 w-auto object-contain">
+        <div class="max-w-screen-xl mx-auto px-4 md:px-6 py-3 md:py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-x-2">
+                <img src="https://kodhan.com/assets/logo.png" alt="Kodhan Logo" class="h-9 md:h-12 w-auto object-contain">
                 <div>
-                    <span class="font-bold text-2xl text-green-800">Kodhan</span>
+                    <span class="font-bold text-xl md:text-2xl text-green-800">Kodhan</span>
                     <span class="font-semibold text-green-600">Edusave</span>
                 </div>
             </div>
 
-            <div class="flex items-center gap-x-8 text-sm font-medium">
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
                 <a href="#" class="text-gray-600 hover:text-green-700 transition">Program</a>
                 <a href="#" class="text-gray-600 hover:text-green-700 transition">Cara Kerja</a>
                 <a href="#" class="text-gray-600 hover:text-green-700 transition">Kalkulator</a>
@@ -74,56 +76,70 @@
                     <span>Coba Kalkulator</span>
                 </button>
             </div>
-        </div>
-    </nav>
 
-    <!-- Hero -->
-    <div class="max-w-screen-xl mx-auto px-6 pt-16 pb-12">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <div
-                    class="inline-flex items-center gap-x-2 bg-green-100 text-green-800 px-4 py-1.5 rounded-3xl text-sm font-semibold mb-6">
+            <!-- Mobile: CTA + Hamburger -->
+            <div class="flex md:hidden items-center gap-x-3">
+                <button onclick="scrollToCalculator()"
+                    class="px-4 py-2 bg-green-700 text-white rounded-xl text-xs font-semibold">
+                    <i class="fa-solid fa-calculator mr-1"></i> Hitung
+                </button>
+                <button onclick="toggleMobileMenu()" id="hamburgerBtn"
+                    class="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 px-4 py-3 flex flex-col gap-3">
+            <a href="#" class="text-gray-700 font-medium py-2 border-b border-gray-100">Program</a>
+            <a href="#" class="text-gray-700 font-medium py-2 border-b border-gray-100">Cara Kerja</a>
+            <a href="#" onclick="scrollToCalculator(); toggleMobileMenu()" class="text-gray-700 font-medium py-2">Kalkulator</a>
+        </div>
+    </nav>    <!-- Hero -->
+    <div class="max-w-screen-xl mx-auto px-4 md:px-6 pt-10 md:pt-16 pb-8 md:pb-12">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="text-center md:text-left">
+                <div class="inline-flex items-center gap-x-2 bg-green-100 text-green-800 px-3 py-1.5 rounded-3xl text-xs md:text-sm font-semibold mb-4 md:mb-6">
                     <i class="fa-solid fa-globe"></i>
                     <span>Program Investasi Pendidikan Pertama di Indonesia</span>
                 </div>
 
-                <h1 class="text-5xl md:text-6xl leading-tight font-bold text-gray-900 tracking-tighter">
+                <h1 class="text-3xl md:text-5xl lg:text-6xl leading-tight font-bold text-gray-900 tracking-tighter">
                     Tabungan yang<br>
                     <span class="text-green-700">Tumbuh Bersama</span><br>
                     Pohon Melon
                 </h1>
 
-                <p class="mt-6 text-xl text-gray-600 max-w-md">
+                <p class="mt-4 md:mt-6 text-base md:text-xl text-gray-600">
                     Siapkan dana pendidikan anak sejak kelas 1 SD dengan investasi nyata di pertanian premium Indonesia.
                 </p>
 
-                <div class="mt-8 flex items-center gap-x-4">
+                <div class="mt-6 md:mt-8 flex flex-col sm:flex-row items-center gap-3 md:gap-4 justify-center md:justify-start">
                     <button onclick="scrollToCalculator()"
-                        class="px-8 py-4 bg-green-700 hover:bg-green-800 transition text-white font-semibold rounded-3xl flex items-center gap-x-3 text-lg shadow-lg shadow-green-200">
+                        class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-green-700 hover:bg-green-800 transition text-white font-semibold rounded-3xl flex items-center justify-center gap-x-3 text-base md:text-lg shadow-lg shadow-green-200">
                         <span>Mulai Hitung Sekarang</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
-
                     <button onclick="showHowItWorks()"
-                        class="px-6 py-4 border border-gray-300 hover:bg-gray-100 transition font-semibold rounded-3xl flex items-center gap-x-2">
+                        class="w-full sm:w-auto px-5 md:px-6 py-3 md:py-4 border border-gray-300 hover:bg-gray-100 transition font-semibold rounded-3xl flex items-center justify-center gap-x-2">
                         <i class="fa-solid fa-play text-green-700"></i>
-                        <span>Lihat Cara Kerja</span>
+                        <span>Cara Kerja</span>
                     </button>
                 </div>
 
-                <div class="mt-8 flex items-center gap-x-6 text-sm">
+                <div class="mt-6 flex items-center gap-x-4 text-sm justify-center md:justify-start">
                     <div class="flex -space-x-2">
                         <img src="https://i.pravatar.cc/32?img=28" class="w-8 h-8 rounded-full border-2 border-white">
                         <img src="https://i.pravatar.cc/32?img=32" class="w-8 h-8 rounded-full border-2 border-white">
                         <img src="https://i.pravatar.cc/32?img=47" class="w-8 h-8 rounded-full border-2 border-white">
                     </div>
-                    <div>
-                        <span class="font-semibold">2.847</span> orang tua sudah bergabung
-                    </div>
+                    <div><span class="font-semibold">2.847</span> orang tua sudah bergabung</div>
                 </div>
             </div>
 
-            <div class="relative">
+            <!-- Hero card: disembunyikan di mobile, tampil di md+ -->
+            <div class="relative hidden md:block">
                 <div class="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
                     <div class="flex justify-between items-start">
                         <div>
@@ -132,20 +148,14 @@
                             <div class="text-sm text-gray-500">dalam 6 tahun</div>
                         </div>
                         <div class="text-right">
-                            <div class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block">+187%
-                            </div>
+                            <div class="text-xs bg-green-100 text-green-700 px-3 py-1 rounded-full inline-block">+187%</div>
                             <div class="text-xs text-gray-500 mt-1">dari setoran</div>
                         </div>
                     </div>
-
-                    <div class="mt-6 text-xs text-gray-500">Dengan setoran Rp 7.500/hari â€¢ Mulai kelas 1 SD</div>
+                    <div class="mt-6 text-xs text-gray-500">Dengan setoran Rp 7.500/hari • Mulai kelas 1 SD</div>
                 </div>
-
-                <div
-                    class="absolute -bottom-4 -right-4 bg-white shadow-xl rounded-2xl p-4 border flex items-center gap-x-3">
-                    <div class="text-green-600">
-                        <i class="fa-solid fa-seedling text-3xl"></i>
-                    </div>
+                <div class="absolute -bottom-4 -right-4 bg-white shadow-xl rounded-2xl p-4 border flex items-center gap-x-3">
+                    <div class="text-green-600"><i class="fa-solid fa-seedling text-3xl"></i></div>
                     <div>
                         <div class="font-semibold text-sm">142 Pohon</div>
                         <div class="text-xs text-gray-500">Milik Anak Anda</div>
@@ -155,14 +165,15 @@
         </div>
     </div>
 
+
     <!-- Program Section -->
-    <div class="max-w-screen-xl mx-auto px-6 py-12">
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-bold text-gray-900">Pilih Program Sesuai Tujuan</h2>
-            <p class="text-gray-600 mt-2">Setiap program dirancang khusus untuk kebutuhan pendidikan anak</p>
+    <div class="max-w-screen-xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div class="text-center mb-6 md:mb-10">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900">Pilih Program Sesuai Tujuan</h2>
+            <p class="text-gray-600 mt-2 text-sm md:text-base">Setiap program dirancang khusus untuk kebutuhan pendidikan anak</p>
         </div>
 
-        <div class="grid md:grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
             <!-- Program Cards -->
             <div class="bg-white border rounded-3xl p-5 card-hover cursor-pointer" onclick="selectProgram(4500000, 1)">
                 <div class="text-green-600 text-xs font-semibold">PALING POPULER</div>
@@ -208,14 +219,14 @@
     </div>
 
     <!-- Kalkulator Section -->
-    <div id="calculator" class="max-w-screen-xl mx-auto px-6 py-16 bg-white border-t">
+    <div id="calculator" class="max-w-screen-xl mx-auto px-4 md:px-6 py-10 md:py-16 bg-white border-t">
         <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-10">
-                <h2 class="text-4xl font-bold text-gray-900">Kalkulator Kodhan Edusave</h2>
-                <p class="text-gray-600 mt-3">Hitung berapa yang harus ditabung agar target tercapai</p>
+            <div class="text-center mb-6 md:mb-10">
+                <h2 class="text-2xl md:text-4xl font-bold text-gray-900">Kalkulator Kodhan Edusave</h2>
+                <p class="text-gray-500 mt-2 md:mt-3 text-sm md:text-base">Hitung berapa yang harus ditabung agar target tercapai</p>
             </div>
 
-            <div class="calculator-box bg-white border border-gray-200 shadow-xl rounded-3xl p-8">
+            <div class="calculator-box bg-white border border-gray-200 shadow-xl rounded-2xl md:rounded-3xl p-4 md:p-8">
                 <div class="grid md:grid-cols-2 gap-8">
 
                     <!-- Input -->
@@ -653,6 +664,12 @@
         }
         function scrollToCalculator() { document.getElementById('calculator').scrollIntoView({ behavior: 'smooth' }); }
         function showHowItWorks() { alert("Fitur 'Cara Kerja' akan ditambahkan di versi berikutnya."); }
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('hamburgerBtn').querySelector('i');
+            menu.classList.toggle('hidden');
+            icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+        }
         function handleTargetInput(input) {
             let num = parseInt(input.value.replace(/[^0-9]/g, ''), 10) || 0;
             document.getElementById('targetAmount').value = num;
